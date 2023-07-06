@@ -15,6 +15,8 @@ class Bot(discord.Client):
         print(f"logged on as {self.user}")
 
     async def on_message(self, message):
+        if (message.author == self.user):
+            return
         print(f"message from {message.author}: {message.content}")
 
 if __name__ == "__main__":
