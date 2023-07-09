@@ -1,5 +1,6 @@
 import discord
 import os
+import re
 from dotenv import load_dotenv
 
 
@@ -26,7 +27,16 @@ class Bot(discord.Client):
         
         channel = message.channel
 
-        await channel.send(message.content)
+        if ('https://twitter.com/' in message.content):
+            # Regular expression to extract URLs
+            # https://macxima.medium.com/python-extracting-urls-from-strings-21dc82e2142b
+            
+            link_regex = re.compile('((https?):((//)|(\\\\))+([\w\d:#@%/;$()~_?\+-=\\\.&](#!)?)*)', re.DOTALL)
+            links = re.findall(link_regex, message.content)
+            filter_links = ''
+            for link in links:
+                filter_links += (f'{link[0][0:8]}vx{link[0][8:]} ')
+            await channel.send(f'Converted Twitter link(s)! {filter_links}')
 
 if __name__ == "__main__":
     bot = Bot(intents=intents)
