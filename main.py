@@ -34,12 +34,12 @@ class Bot(discord.Client):
             link_regex = re.compile('((https?):((//)|(\\\\))+([\w\d:#@%/;$()~_?\+-=\\\.&](#!)?)*)', re.DOTALL)
             links = re.findall(link_regex, message.content)
             filter_links = ''
-            message_text = ''
+            
             for link in links:
                 filter_links += (f'{link[0][0:8]}vx{link[0][8:]} ')
                 msg = message.content.split(link[0])
                 msg = "".join(msg)
-            print(msg)
+
             await channel.send(content=f'<@{message.author.id}> {msg} {filter_links}')
 
 if __name__ == "__main__":
