@@ -36,7 +36,7 @@ class Bot(discord.Client):
             filter_links = ''
             for link in links:
                 filter_links += (f'{link[0][0:8]}vx{link[0][8:]} ')
-            await channel.send(f'Converted Twitter link(s)! {filter_links}')
+            await channel.send(content=f'<@{message.author.id}> Converted your Twitter link(s)! {filter_links}')
 
 if __name__ == "__main__":
     bot = Bot(intents=intents)
