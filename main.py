@@ -40,7 +40,8 @@ class Bot(discord.Client):
                 msg = message.content.split(link[0])
                 msg = "".join(msg)
 
-            await channel.send(content=f'<@{message.author.id}> {msg} {filter_links}')
+            await channel.send(content=f'From: <@{message.author.id}> {msg} {filter_links}')
+            await message.delete()
 
 if __name__ == "__main__":
     bot = Bot(intents=intents)
