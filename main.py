@@ -27,7 +27,7 @@ class Bot(discord.Client):
         
         channel = message.channel
 
-        if ('https://twitter.com/' in message.content):
+        if ('https://twitter.com/' in message.content and not message.embeds):
             # Regular expression to extract URLs
             # https://macxima.medium.com/python-extracting-urls-from-strings-21dc82e2142b
             
