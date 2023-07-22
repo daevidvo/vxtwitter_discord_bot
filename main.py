@@ -1,15 +1,13 @@
 import discord
 import os
 import re
-from dotenv import load_dotenv
 
 
 # check discord version
 print(discord.__version__)
 
 # initialize dotenv
-load_dotenv()
-TOKEN = os.getenv("DISCORD_TOKEN")
+TOKEN = os.environ.get("DISCORD_TOKEN")
 
 # set up discord
 intents = discord.Intents.default()
