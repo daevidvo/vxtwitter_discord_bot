@@ -2,7 +2,6 @@ import discord
 import os
 import re
 
-
 # check discord version
 print(discord.__version__)
 
@@ -22,23 +21,29 @@ class Bot(discord.Client):
         if (message.author == self.user):
             return
         print(f"message from {message.author}: {message.content}")
-        
         channel = message.channel
 
-        if ('https://twitter.com/' in message.content and not message.embeds):
+        # Regular expression to extract strings up to the fourth slash
+        # https://stackoverflow.com/questions/73440592/typeerror-expected-token-to-be-a-str-received-class-nonetype-instead
+        status_regex = re.compile('(?:.+?/){4}', re.DOTALL)
+        compiled_status = re.findall(status_regex, message.content)
+
+        if ('https://twitter.com/' in message.content and '/status' in str(compiled_status) and not message.embeds):
             # Regular expression to extract URLs
             # https://macxima.medium.com/python-extracting-urls-from-strings-21dc82e2142b
             
             link_regex = re.compile('((https?):((//)|(\\\\))+([\w\d:#@%/;$()~_?\+-=\\\.&](#!)?)*)', re.DOTALL)
             links = re.findall(link_regex, message.content)
             filter_links = ''
+            filter_nonlinks = message.content
             
             for link in links:
-                filter_links += (f'{link[0][0:8]}vx{link[0][8:]} ')
-                msg = message.content.split(link[0])
-                msg = "".join(msg)
+                if '/status/' in link[0]:
+                    filter_links += (f'{link[0][0:8]}vx{link[0][8:]} ')
+                    filter_nonlinks = filter_nonlinks.replace(link[0], '')
 
-            await channel.send(content=f'From: <@{message.author.id}> {msg} {filter_links}')
+            filter_nonlinks = filter_nonlinks.strip()
+            await channel.send(content=f'From: <@{message.author.id}> {filter_nonlinks} {filter_links}')
             await message.delete()
 
 if __name__ == "__main__":
