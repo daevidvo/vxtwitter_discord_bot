@@ -29,7 +29,7 @@ class Bot(discord.Client):
         status_regex = re.compile('(?:.+?/){4}', re.DOTALL)
         compiled_status = re.findall(status_regex, message.content)
 
-        if 'https://twitter.com/' in message.content and '/status' in str(compiled_status) and not message.embeds or message.embeds[0].video:
+        if 'https://twitter.com/' in message.content and '/status' in str(compiled_status) and not message.embeds or message.embeds[0].video and 'twitter' in message.embeds[0].url:
             # Regular expression to extract URLs
             # https://macxima.medium.com/python-extracting-urls-from-strings-21dc82e2142b
             
