@@ -24,8 +24,6 @@ class Bot(discord.Client):
         print(f"message from {message.author}: {message.content}")
         channel = message.channel
 
-        print(message.embeds[0].url)
-
         # Regular expression to extract strings up to the fourth slash
         # https://stackoverflow.com/questions/73440592/typeerror-expected-token-to-be-a-str-received-class-nonetype-instead
         status_regex = re.compile('(?:.+?/){4}', re.DOTALL)
