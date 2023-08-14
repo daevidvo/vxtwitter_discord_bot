@@ -35,7 +35,7 @@ class Bot(discord.Client):
         status_regex = re.compile('(?:.+?/){4}', re.DOTALL)
         compiled_status = re.findall(status_regex, message.content)
 
-        if 'https://twitter.com/' in message.content and '/status' in str(compiled_status):
+        if ('https://twitter.com/' in message.content or 'https://x.com/' in message.content) and '/status' in str(compiled_status):
             # Regular expression to extract URLs
             # https://macxima.medium.com/python-extracting-urls-from-strings-21dc82e2142b
             
@@ -45,9 +45,12 @@ class Bot(discord.Client):
             filter_nonlinks = message.content
             
             for link in links:
-                if '/status/' in link[0]:
-                    filter_links += (f'{link[0][0:8]}vx{link[0][8:]} ')
-                    filter_nonlinks = filter_nonlinks.replace(link[0], '')
+                compressed_link = link[0]
+                if 'https://x.com/' in compressed_link:
+                    compressed_link = f'{compressed_link[0:8]}twitter{compressed_link[9:]}'
+                if '/status/' in compressed_link:
+                    filter_links += (f'{compressed_link[0:8]}vx{compressed_link[8:]} ')
+                    filter_nonlinks = filter_nonlinks.replace(compressed_link, '')
 
             filter_nonlinks = filter_nonlinks.strip()
 
