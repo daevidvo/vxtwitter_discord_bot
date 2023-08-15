@@ -45,12 +45,13 @@ class Bot(discord.Client):
             filter_nonlinks = message.content
             
             for link in links:
+                original_link = link[0]
                 compressed_link = link[0]
                 if 'https://x.com/' in compressed_link:
                     compressed_link = f'{compressed_link[0:8]}twitter{compressed_link[9:]}'
                 if '/status/' in compressed_link:
                     filter_links += (f'{compressed_link[0:8]}vx{compressed_link[8:]} ')
-                    filter_nonlinks = filter_nonlinks.replace(compressed_link, '')
+                    filter_nonlinks = filter_nonlinks.replace(original_link, '')
 
             filter_nonlinks = filter_nonlinks.strip()
 
