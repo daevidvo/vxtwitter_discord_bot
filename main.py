@@ -8,12 +8,12 @@ print(discord.__version__)
 
 # initialize dotenv
 # production env
-TOKEN = os.environ.get("DISCORD_TOKEN")
+# TOKEN = os.environ.get("DISCORD_TOKEN")
 
 # local env loading
-# from dotenv import load_dotenv
-# load_dotenv()
-# TOKEN = os.getenv("DISCORD_TOKEN")
+from dotenv import load_dotenv
+load_dotenv()
+TOKEN = os.getenv("DISCORD_TOKEN")
 
 # set up discord
 intents = discord.Intents.default()
@@ -60,11 +60,13 @@ class Bot(discord.Client):
 
     async def on_raw_reaction_add(self, payload):
         msg = await self.get_channel(payload.channel_id).fetch_message(payload.message_id)
-        msgAuthor = int(msg.content.split(" ")[1][2:-1])
 
-        if msgAuthor == payload.user_id and str(payload.emoji) == "❌":
-            await msg.delete()
-            
+        if msg.author == self.user:
+            msgAuthorID = int(msg.content.split(" ")[1][2:-1])
+
+            if msgAuthorID == payload.user_id and str(payload.emoji) == "❌":
+                await msg.delete()
+                
 
 if __name__ == "__main__":
     bot = Bot(intents=intents)
