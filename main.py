@@ -58,6 +58,16 @@ class Bot(discord.Client):
             await channel.send(content=f'From: <@{message.author.id}> {filter_nonlinks} {filter_links}')
             await message.delete()
 
+    async def on_raw_reaction_add(self, payload):
+        msg = await self.get_channel(payload.channel_id).fetch_message(payload.message_id)
+
+        if msg.author == self.user:
+            msgAuthorID = int(msg.content.split(" ")[1][2:-1])
+
+            if msgAuthorID == payload.user_id and str(payload.emoji) == "❌":
+                await msg.delete()
+                
+
 if __name__ == "__main__":
     bot = Bot(intents=intents)
     bot.run(token=TOKEN)
