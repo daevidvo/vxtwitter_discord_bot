@@ -8,12 +8,12 @@ print(discord.__version__)
 
 # initialize dotenv
 # production env
-TOKEN = os.environ.get("DISCORD_TOKEN")
+# TOKEN = os.environ.get("DISCORD_TOKEN")
 
 # local env loading
-# from dotenv import load_dotenv
-# load_dotenv()
-# TOKEN = os.getenv("DISCORD_TOKEN")
+from dotenv import load_dotenv
+load_dotenv()
+TOKEN = os.getenv("DISCORD_TOKEN")
 
 # set up discord
 intents = discord.Intents.default()
@@ -35,6 +35,7 @@ class Bot(discord.Client):
         status_regex = re.compile('(?:.+?/){4}', re.DOTALL)
         compiled_status = re.findall(status_regex, message.content)
 
+        # for vxtwitter link automation
         if ('https://twitter.com/' in message.content or 'https://x.com/' in message.content) and '/status' in str(compiled_status):
             # Regular expression to extract URLs
             # https://macxima.medium.com/python-extracting-urls-from-strings-21dc82e2142b
@@ -55,8 +56,17 @@ class Bot(discord.Client):
 
             filter_nonlinks = filter_nonlinks.strip()
 
-            await channel.send(content=f'From: <@{message.author.id}> {filter_nonlinks} {filter_links}')
-            await message.delete()
+            try:
+                await channel.send(content=f'From: <@{message.author.id}> {filter_nonlinks} {filter_links}')
+                await message.delete()
+            except:
+                await channel.send(content=f'error sending fixed twitter link')
+
+        if message.content.startswith("!natetimer"):
+            try:
+                await channel.send(content=f'nate is afk')
+            except:
+                await channel.send(content=f'error in sending nateafk timer')
 
     async def on_raw_reaction_add(self, payload):
         msg = await self.get_channel(payload.channel_id).fetch_message(payload.message_id)
