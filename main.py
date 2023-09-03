@@ -20,7 +20,10 @@ intents = discord.Intents.default()
 intents.message_content = True
 
 # creating bot
-class Bot(discord.Client): 
+class Bot(discord.Client):
+    # prviate variable
+    __nateTimer = False
+
     async def on_ready(self):
         print(f"logged on as {self.user}")
 
@@ -64,7 +67,12 @@ class Bot(discord.Client):
 
         if message.content.startswith("!natetimer"):
             try:
-                await channel.send(content=f'nate is afk')
+                if self.__nateTimer is False:
+                    self.__nateTimer = True
+                    await channel.send(content=f'nate is afk')
+                else:
+                    self.__nateTimer = False
+                    await channel.send(content=f'nate is back')
             except:
                 await channel.send(content=f'error in sending nateafk timer')
 
