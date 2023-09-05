@@ -1,6 +1,8 @@
 import discord
 import os
 import re
+import time
+import math
 
 
 # check discord version
@@ -21,7 +23,7 @@ intents.message_content = True
 
 # creating bot
 class Bot(discord.Client):
-    # prviate variable
+    # prviate variables
     __nateTimer = False
 
     async def on_ready(self):
@@ -68,11 +70,14 @@ class Bot(discord.Client):
         if message.content.startswith("!natetimer"):
             try:
                 if self.__nateTimer is False:
-                    self.__nateTimer = True
+                    # record current time since epoch in seconds in __nateTimer
+                    self.__nateTimer = time.time()
                     await channel.send(content=f'nate is afk')
                 else:
+                    returnTime = time.time()
+                    deltaTime = math.ceil(((returnTime - self.__nateTimer)/60))
                     self.__nateTimer = False
-                    await channel.send(content=f'nate is back')
+                    await channel.send(content=f'nate is back and was afk for ***{deltaTime}*** minutes')
             except:
                 await channel.send(content=f'error in sending nateafk timer')
 
