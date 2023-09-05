@@ -10,12 +10,12 @@ print(discord.__version__)
 
 # initialize dotenv
 # production env
-# TOKEN = os.environ.get("DISCORD_TOKEN")
+TOKEN = os.environ.get("DISCORD_TOKEN")
 
 # local env loading
-from dotenv import load_dotenv
-load_dotenv()
-TOKEN = os.getenv("DISCORD_TOKEN")
+# from dotenv import load_dotenv
+# load_dotenv()
+# TOKEN = os.getenv("DISCORD_TOKEN")
 
 # set up discord
 intents = discord.Intents.default()
