@@ -80,6 +80,12 @@ class Bot(discord.Client):
                     await channel.send(content=f'nate is back and was afk for ***{deltaTime}*** minutes')
             except:
                 await channel.send(content=f'error in sending nateafk timer')
+        
+        if message.content.startswith("!nate"):
+            try:
+                await channel.send(content=f'The truth about Nate: He is a big fat meanie, he likes to suck smelly peepee and, he makes everywhere he goes to Hell. His anger problems need to chill. He is also a domekano enjoyer 💀')
+            except:
+                await channel.send(content=f'error sending nate copypasta')
 
     async def on_raw_reaction_add(self, payload):
         msg = await self.get_channel(payload.channel_id).fetch_message(payload.message_id)
