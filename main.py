@@ -81,7 +81,7 @@ class Bot(discord.Client):
             except:
                 await channel.send(content=f'error in sending nateafk timer')
         
-        if message.content.startswith("!nate"):
+        if message.content is "!nate":
             try:
                 await channel.send(content=f'The truth about Nate: He is a big fat meanie, he likes to suck smelly peepee and, he makes everywhere he goes to Hell. His anger problems need to chill. He is also a domekano enjoyer 💀')
             except:
