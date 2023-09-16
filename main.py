@@ -10,12 +10,12 @@ print(discord.__version__)
 
 # initialize dotenv
 # production env
-TOKEN = os.environ.get("DISCORD_TOKEN")
+# TOKEN = os.environ.get("DISCORD_TOKEN")
 
 # local env loading
-# from dotenv import load_dotenv
-# load_dotenv()
-# TOKEN = os.getenv("DISCORD_TOKEN")
+from dotenv import load_dotenv
+load_dotenv()
+TOKEN = os.getenv("DISCORD_TOKEN")
 
 # set up discord
 intents = discord.Intents.default()
@@ -61,11 +61,17 @@ class Bot(discord.Client):
 
             filter_nonlinks = filter_nonlinks.strip()
 
+            if message.content.startswith("||"):
+                try:
+                    await channel.send(content=f'|| From: <@{message.author.id}> {filter_nonlinks} {filter_links}||')
+                    return await message.delete()
+                except:
+                    return await channel.send(content=f'error sending fixed twitter link')
             try:
                 await channel.send(content=f'From: <@{message.author.id}> {filter_nonlinks} {filter_links}')
-                await message.delete()
+                return await message.delete()
             except:
-                await channel.send(content=f'error sending fixed twitter link')
+                return await channel.send(content=f'error sending fixed twitter link')
 
         if message.content.startswith("!natetimer"):
             try:
