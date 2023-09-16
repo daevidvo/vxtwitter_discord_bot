@@ -61,9 +61,9 @@ class Bot(discord.Client):
 
             filter_nonlinks = filter_nonlinks.strip()
 
-            if message.content.startswith("||"):
+            if "||" in message.content:
                 try:
-                    await channel.send(content=f'|| From: <@{message.author.id}> {filter_nonlinks} {filter_links}||')
+                    await channel.send(content=f'From: <@{message.author.id}> ||{filter_nonlinks} {filter_links}||')
                     return await message.delete()
                 except:
                     return await channel.send(content=f'error sending fixed twitter link')
