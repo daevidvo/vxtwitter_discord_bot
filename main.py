@@ -63,12 +63,12 @@ class Bot(discord.Client):
 
             if "||" in message.content:
                 try:
-                    await channel.send(content=f'From: <@{message.author.id}> || {filter_nonlinks} {filter_links} ||')
+                    await channel.send(content=f'@silent From: <@{message.author.id}> || {filter_nonlinks} {filter_links} ||')
                     return await message.delete()
                 except:
                     return await channel.send(content=f'error sending fixed twitter link')
             try:
-                await channel.send(content=f'From: <@{message.author.id}> {filter_nonlinks} {filter_links}')
+                await channel.send(content=f'@silent From: <@{message.author.id}> {filter_nonlinks} {filter_links}')
                 return await message.delete()
             except:
                 return await channel.send(content=f'error sending fixed twitter link')
