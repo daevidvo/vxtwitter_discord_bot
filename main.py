@@ -72,21 +72,7 @@ class Bot(discord.Client):
                 return await message.delete()
             except:
                 return await channel.send(content=f'error sending fixed twitter link')
-
-        if message.content.startswith("!natetimer"):
-            try:
-                if self.__nateTimer is False:
-                    # record current time since epoch in seconds in __nateTimer
-                    self.__nateTimer = time.time()
-                    await channel.send(content=f'nate is afk')
-                else:
-                    returnTime = time.time()
-                    deltaTime = math.ceil(((returnTime - self.__nateTimer)/60))
-                    self.__nateTimer = False
-                    await channel.send(content=f'nate is back and was afk for ***{deltaTime}*** minutes')
-            except:
-                await channel.send(content=f'error in sending nateafk timer')
-        
+       
         if message.content.startswith("!natepasta"):
             try:
                 await channel.send(content=f'The truth about Nate: He is a big fat meanie, he likes to suck smelly peepee and, he makes everywhere he goes to Hell. His anger problems need to chill. He is also a domekano enjoyer 💀')
