@@ -67,7 +67,8 @@ class Bot(discord.Client):
                     msg = await self.get_channel(message.reference.channel_id).fetch_message(message.reference.message_id)
 
                     # holy there's so much repeated code we needa refactor sometime 💀
-                    return await msg.reply(content=f'From: <@{message.author.id}> {filter_nonlinks} {filter_links}', silent=True)
+                    await msg.reply(content=f'From: <@{message.author.id}> {filter_nonlinks} {filter_links}', silent=True)
+                    return await msg.delete()
                 except:
                     return await channel.send(content=f'error sending reply message with twitter links') 
 
