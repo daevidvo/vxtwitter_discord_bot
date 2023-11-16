@@ -26,14 +26,17 @@ class Bot(discord.Client):
     # prviate variables
     __nateTimer = False
 
+    __ignoredChannels = ["fgo", "arknights", "azur-lane-twitter"]
+
     async def on_ready(self):
         print(f"logged on as {self.user}")
 
     async def on_message(self, message):
-        if message.author == self.user or message.author.bot:
+        channel = message.channel
+
+        if message.author == self.user or message.author.bot or channel in self.__ignoredChannels:
             return
         print(f"message from {message.author}: {message.content}")
-        channel = message.channel
 
         # Regular expression to extract strings up to the fourth slash
         # https://stackoverflow.com/questions/73440592/typeerror-expected-token-to-be-a-str-received-class-nonetype-instead
