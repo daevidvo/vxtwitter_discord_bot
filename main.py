@@ -30,7 +30,7 @@ class Bot(discord.Client):
         print(f"logged on as {self.user}")
 
     async def on_message(self, message):
-        if message.author == self.user:
+        if message.author == self.user or message.author.bot:
             return
         print(f"message from {message.author}: {message.content}")
         channel = message.channel
